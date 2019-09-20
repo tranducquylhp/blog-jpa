@@ -4,13 +4,14 @@ import com.codegym.blog.model.Blog;
 import com.codegym.blog.service.BlogService;
 import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class BlogController {
@@ -28,9 +29,10 @@ public class BlogController {
     }
 
     @PostMapping("blogs")
-    public ModelAndView create(@ModelAttribute("blog") Blog blog){
+    public ModelAndView create(@ModelAttribute("blog") Blog blog, Pageable pageable){
         blogService.save(blog);
-        List<Blog> blogs = blogService.findAll();
+
+        Page<Blog> blogs = blogService.findAll(pageable);
         ModelAndView modelAndView = new ModelAndView("/blog/list");
         modelAndView.addObject("message","Create successfull");
         modelAndView.addObject("blogs", blogs);
@@ -38,15 +40,15 @@ public class BlogController {
     }
 
     @GetMapping("/blogs")
-    public ModelAndView listBlog(){
-        List<Blog> blogs = blogService.findAll();
+    public ModelAndView listBlog(@RequestParam("s") Optional<String> s, Pageable pageable){
+        Page<Blog> blogs = blogService.findAll(pageable);
         ModelAndView modelAndView = new ModelAndView("/blog/list");
         modelAndView.addObject("blogs", blogs);
         return modelAndView;
     }
 
     @GetMapping("/edit-blog/{id}")
-    public ModelAndView showEditForm(@PathVariable int id){
+    public ModelAndView showEditForm(@PathVariable long id){
         Blog blog = blogService.findById(id);
         if(blog != null) {
             ModelAndView modelAndView = new ModelAndView("/blog/edit");
@@ -69,7 +71,7 @@ public class BlogController {
     }
 
     @GetMapping("/delete-blog/{id}")
-    public ModelAndView showDeleteForm(@PathVariable int id){
+    public ModelAndView showDeleteForm(@PathVariable long id){
         Blog blog = blogService.findById(id);
         if(blog != null) {
             ModelAndView modelAndView = new ModelAndView("/blog/delete");
@@ -89,7 +91,7 @@ public class BlogController {
     }
 
     @GetMapping("/view-blog/{id}")
-    public ModelAndView showViewForm(@PathVariable int id){
+    public ModelAndView showViewForm(@PathVariable long id){
         Blog blog = blogService.findById(id);
         if(blog != null) {
             ModelAndView modelAndView = new ModelAndView("/blog/view");

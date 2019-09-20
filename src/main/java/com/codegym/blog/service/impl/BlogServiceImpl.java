@@ -1,19 +1,26 @@
 package com.codegym.blog.service.impl;
 
 import com.codegym.blog.model.Blog;
+import com.codegym.blog.model.Category;
 import com.codegym.blog.repository.BlogRepository;
 import com.codegym.blog.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public class BlogServiceImpl implements BlogService {
 
     @Autowired
     private BlogRepository blogRepository;
+
     @Override
-    public List<Blog> findAll() {
-        return blogRepository.findAll();
+    public Page<Blog> findAll(Pageable pageable) {
+        return blogRepository.findAll(pageable);
+    }
+
+    @Override
+    public Blog findById(Long id) {
+        return blogRepository.findOne(id);
     }
 
     @Override
@@ -22,12 +29,8 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public void delete(int i) {
-        blogRepository.delete(i);
+    public void delete(Long id) {
+        blogRepository.delete(id);
     }
 
-    @Override
-    public Blog findById(int id) {
-        return blogRepository.findById(id);
-    }
 }
