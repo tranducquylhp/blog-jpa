@@ -1,8 +1,11 @@
 package com.codegym.blog;
 
+import com.codegym.blog.converter.StringToLocalDateConverter;
 import com.codegym.blog.repository.BlogRepository;
 import com.codegym.blog.service.BlogService;
+import com.codegym.blog.service.CategoryService;
 import com.codegym.blog.service.impl.BlogServiceImpl;
+import com.codegym.blog.service.impl.CategoryServiceImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -30,7 +33,10 @@ import org.thymeleaf.templatemode.TemplateMode;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
+
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
@@ -50,7 +56,10 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
         return new BlogServiceImpl();
     }
 
-
+    @Bean
+    public CategoryService categoryService(){
+        return new CategoryServiceImpl();
+    }
     //Thymeleaf Configuration
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
@@ -119,6 +128,15 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         return properties;
+    }
+
+    //Config Converter
+    @Bean
+    public Set<StringToLocalDateConverter> converters() {
+        Set<StringToLocalDateConverter> converters = new HashSet<StringToLocalDateConverter>();
+        converters.add(new StringToLocalDateConverter("MM-dd-yyyy"));
+        return converters;
+
     }
 
 }

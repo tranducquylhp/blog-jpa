@@ -15,6 +15,7 @@
         <th>Id</th>
         <th>Title</th>
         <th>Description</th>
+        <th>Date</th>
         <th>Edit</th>
         <th>Delete</th>
         <th>View</th>
@@ -24,6 +25,7 @@
             <td th:text="${blog.id}"></td>
             <td th:text="${blog.title}"></td>
             <td th:text="${blog.description}"></td>
+            <td th:text="${blog.dateCreate}"></td>
             <td><a th:href="@{/edit-blog/__${blog.id}__ }">Edit</a></td>
             <td><a th:href="@{/delete-blog/__${blog.id}__ }">Delete</a></td>
             <td><a th:href="@{/view-blog/__${blog.id}__}">View</a> </td>

@@ -926,174 +926,235 @@
       <Charset>utf8mb4</Charset>
       <DefaultForCharset>0</DefaultForCharset>
     </collation>
-    <table id="233" parent="3" name="book"/>
-    <table id="234" parent="3" name="borrow_order"/>
-    <table id="235" parent="3" name="category"/>
-    <table id="236" parent="3" name="image_student"/>
-    <table id="237" parent="3" name="student"/>
-    <column id="238" parent="233" name="book_id">
+    <table id="233" parent="2" name="blog">
+      <Engine>MyISAM</Engine>
+    </table>
+    <table id="234" parent="2" name="category">
+      <Engine>MyISAM</Engine>
+    </table>
+    <table id="235" parent="2" name="hibernate_sequence">
+      <Engine>MyISAM</Engine>
+    </table>
+    <table id="236" parent="3" name="book"/>
+    <table id="237" parent="3" name="borrow_order"/>
+    <table id="238" parent="3" name="category"/>
+    <table id="239" parent="3" name="image_student"/>
+    <table id="240" parent="3" name="student"/>
+    <column id="241" parent="233" name="id">
+      <Position>1</Position>
+      <DataType>bigint(20)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="242" parent="233" name="content">
+      <Position>2</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="243" parent="233" name="dateCreate">
+      <Position>3</Position>
+      <DataType>datetime|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="244" parent="233" name="description">
+      <Position>4</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="245" parent="233" name="title">
+      <Position>5</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="246" parent="233" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="247" parent="234" name="id">
+      <Position>1</Position>
+      <DataType>bigint(20)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="248" parent="234" name="name">
+      <Position>2</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="249" parent="234" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="250" parent="235" name="next_val">
+      <Position>1</Position>
+      <DataType>bigint(20)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="251" parent="236" name="book_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="239" parent="233" name="book_name">
+    <column id="252" parent="236" name="book_name">
       <Position>2</Position>
       <DataType>varchar(500)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="240" parent="233" name="kind">
+    <column id="253" parent="236" name="kind">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="241" parent="233" name="fk_kind">
+    <index id="254" parent="236" name="fk_kind">
       <ColNames>kind</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="242" parent="233" name="PRIMARY">
+    <key id="255" parent="236" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>book_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="243" parent="233" name="fk_kind">
+    <foreign-key id="256" parent="236" name="fk_kind">
       <ColNames>kind</ColNames>
       <RefSchemaName>borrow_book</RefSchemaName>
       <RefTableName>category</RefTableName>
       <RefColNames>category_id</RefColNames>
     </foreign-key>
-    <column id="244" parent="234" name="order_id">
+    <column id="257" parent="237" name="order_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="245" parent="234" name="student_number">
+    <column id="258" parent="237" name="student_number">
       <Position>2</Position>
       <DataType>varchar(15)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="246" parent="234" name="book_id">
+    <column id="259" parent="237" name="book_id">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="247" parent="234" name="date_borrow">
+    <column id="260" parent="237" name="date_borrow">
       <Position>4</Position>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="248" parent="234" name="date_require_pay_book">
+    <column id="261" parent="237" name="date_require_pay_book">
       <Position>5</Position>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="249" parent="234" name="date_pay">
+    <column id="262" parent="237" name="date_pay">
       <Position>6</Position>
       <DataType>date|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="250" parent="234" name="fk_student_number">
+    <index id="263" parent="237" name="fk_student_number">
       <ColNames>student_number</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="251" parent="234" name="fk_book_id">
+    <index id="264" parent="237" name="fk_book_id">
       <ColNames>book_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="252" parent="234" name="PRIMARY">
+    <key id="265" parent="237" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>order_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="253" parent="234" name="fk_student_number">
+    <foreign-key id="266" parent="237" name="fk_student_number">
       <ColNames>student_number</ColNames>
       <RefSchemaName>borrow_book</RefSchemaName>
       <RefTableName>student</RefTableName>
       <RefColNames>student_number</RefColNames>
     </foreign-key>
-    <foreign-key id="254" parent="234" name="fk_book_id">
+    <foreign-key id="267" parent="237" name="fk_book_id">
       <ColNames>book_id</ColNames>
       <RefSchemaName>borrow_book</RefSchemaName>
       <RefTableName>book</RefTableName>
       <RefColNames>book_id</RefColNames>
     </foreign-key>
-    <column id="255" parent="235" name="category_id">
+    <column id="268" parent="238" name="category_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="256" parent="235" name="category_kind">
+    <column id="269" parent="238" name="category_kind">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="257" parent="235" name="PRIMARY">
+    <key id="270" parent="238" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>category_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="258" parent="236" name="image_id">
+    <column id="271" parent="239" name="image_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="259" parent="236" name="name">
+    <column id="272" parent="239" name="name">
       <Position>2</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="260" parent="236" name="PRIMARY">
+    <key id="273" parent="239" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>image_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="261" parent="237" name="student_number">
+    <column id="274" parent="240" name="student_number">
       <Position>1</Position>
       <DataType>varchar(15)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="262" parent="237" name="student_name">
+    <column id="275" parent="240" name="student_name">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="263" parent="237" name="address">
+    <column id="276" parent="240" name="address">
       <Position>3</Position>
       <DataType>varchar(500)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="264" parent="237" name="email">
+    <column id="277" parent="240" name="email">
       <Position>4</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="265" parent="237" name="image">
+    <column id="278" parent="240" name="image">
       <Position>5</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="266" parent="237" name="fk_image">
+    <index id="279" parent="240" name="fk_image">
       <ColNames>image</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="267" parent="237" name="PRIMARY">
+    <key id="280" parent="240" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>student_number</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="268" parent="237" name="fk_image">
+    <foreign-key id="281" parent="240" name="fk_image">
       <ColNames>image</ColNames>
       <RefSchemaName>borrow_book</RefSchemaName>
       <RefTableName>image_student</RefTableName>

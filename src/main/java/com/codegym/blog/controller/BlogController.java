@@ -9,8 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -34,7 +32,7 @@ public class BlogController {
 
         Page<Blog> blogs = blogService.findAll(pageable);
         ModelAndView modelAndView = new ModelAndView("/blog/list");
-        modelAndView.addObject("message","Create successfull");
+        modelAndView.addObject("message","Create successfully");
         modelAndView.addObject("blogs", blogs);
         return modelAndView;
     }
@@ -56,7 +54,7 @@ public class BlogController {
             return modelAndView;
 
         }else {
-            ModelAndView modelAndView = new ModelAndView("/blog/error.404");
+            ModelAndView modelAndView = new ModelAndView("/error.404");
             return modelAndView;
         }
     }
@@ -79,7 +77,7 @@ public class BlogController {
             return modelAndView;
 
         }else {
-            ModelAndView modelAndView = new ModelAndView("/blog/error.404");
+            ModelAndView modelAndView = new ModelAndView("/error.404");
             return modelAndView;
         }
     }
@@ -99,7 +97,7 @@ public class BlogController {
             return modelAndView;
 
         }else {
-            ModelAndView modelAndView = new ModelAndView("/blog/error.404");
+            ModelAndView modelAndView = new ModelAndView("/error.404");
             return modelAndView;
         }
     }

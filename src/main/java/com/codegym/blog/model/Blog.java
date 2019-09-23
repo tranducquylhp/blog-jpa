@@ -1,6 +1,7 @@
 package com.codegym.blog.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "Blog")
@@ -11,14 +12,16 @@ public class Blog {
     private String title;
     private String description;
     private String content;
+    private String dateCreate;
 
     public Blog() {
     }
 
-    public Blog(String title, String description, String content) {
+    public Blog(String title, String description, String content, String dateCreate) {
         this.title = title;
         this.description = description;
         this.content = content;
+        this.dateCreate = dateCreate;
     }
 
     public long getId() {
@@ -51,5 +54,13 @@ public class Blog {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getDateCreate() {
+        return dateCreate;
+    }
+
+    public void setDateCreate(String dateCreate) {
+        this.dateCreate = dateCreate;
     }
 }
