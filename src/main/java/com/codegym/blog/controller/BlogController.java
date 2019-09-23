@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -29,8 +31,8 @@ public class BlogController {
     @PostMapping("blogs")
     public ModelAndView create(@ModelAttribute("blog") Blog blog, Pageable pageable){
         blogService.save(blog);
+        Page<Blog> blogs = blogService.sort(pageable);
 
-        Page<Blog> blogs = blogService.findAll(pageable);
         ModelAndView modelAndView = new ModelAndView("/blog/list");
         modelAndView.addObject("message","Create successfully");
         modelAndView.addObject("blogs", blogs);
@@ -39,7 +41,7 @@ public class BlogController {
 
     @GetMapping("/blogs")
     public ModelAndView listBlog(@RequestParam("s") Optional<String> s, Pageable pageable){
-        Page<Blog> blogs = blogService.findAll(pageable);
+        Page<Blog> blogs = blogService.sort(pageable);
         ModelAndView modelAndView = new ModelAndView("/blog/list");
         modelAndView.addObject("blogs", blogs);
         return modelAndView;

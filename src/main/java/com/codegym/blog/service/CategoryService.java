@@ -5,6 +5,8 @@ import com.codegym.blog.model.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface CategoryService {
     Page<Category> findAll(Pageable pageable);
 
@@ -13,4 +15,5 @@ public interface CategoryService {
     void save(Category category);
 
     void delete(Long id);
+
 }
