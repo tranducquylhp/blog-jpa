@@ -1,7 +1,9 @@
 package com.codegym.blog.controller;
 
 import com.codegym.blog.model.Blog;
+import com.codegym.blog.model.Category;
 import com.codegym.blog.service.BlogService;
+import com.codegym.blog.service.CategoryService;
 import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -21,6 +22,13 @@ public class BlogController {
     @Autowired
     public BlogService blogService;
 
+    @Autowired
+    private CategoryService categoryService;
+
+    @ModelAttribute("categories")
+    public Iterable<Category> provinces(){
+        return categoryService.findAll();
+    }
     @GetMapping("create-blog")
     public ModelAndView showCreateForm(){
         ModelAndView modelAndView = new ModelAndView("/blog/create");
@@ -41,7 +49,12 @@ public class BlogController {
 
     @GetMapping("/blogs")
     public ModelAndView listBlog(@RequestParam("s") Optional<String> s, Pageable pageable){
-        Page<Blog> blogs = blogService.sort(pageable);
+        Page<Blog> blogs;
+        if(s.isPresent()){
+            blogs = blogService.findAllByTitleContaining(s.get(), pageable);
+        } else {
+            blogs = blogService.findAll(pageable);
+        }
         ModelAndView modelAndView = new ModelAndView("/blog/list");
         modelAndView.addObject("blogs", blogs);
         return modelAndView;

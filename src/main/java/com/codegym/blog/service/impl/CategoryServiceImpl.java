@@ -1,13 +1,9 @@
 package com.codegym.blog.service.impl;
 
-
-import com.codegym.blog.model.Blog;
 import com.codegym.blog.model.Category;
 import com.codegym.blog.repository.CategoryRepository;
 import com.codegym.blog.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 public class CategoryServiceImpl implements CategoryService {
 
@@ -15,8 +11,8 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
 
     @Override
-    public Page<Category> findAll(Pageable pageable) {
-        return categoryRepository.findAll(pageable);
+    public Iterable<Category> findAll() {
+        return categoryRepository.findAll();
     }
 
     @Override

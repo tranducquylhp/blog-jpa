@@ -1,7 +1,6 @@
 package com.codegym.blog;
 
-import com.codegym.blog.converter.StringToLocalDateConverter;
-import com.codegym.blog.repository.BlogRepository;
+import com.codegym.blog.formatter.CategoryFormatter;
 import com.codegym.blog.service.BlogService;
 import com.codegym.blog.service.CategoryService;
 import com.codegym.blog.service.impl.BlogServiceImpl;
@@ -15,6 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -33,9 +33,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.util.HashSet;
 import java.util.Properties;
-import java.util.Set;
 
 @Configuration
 @EnableWebMvc
@@ -44,6 +42,7 @@ import java.util.Set;
 @EnableJpaRepositories("com.codegym.blog.repository")
 @EnableSpringDataWebSupport
 public class ApplicationConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
+
     private ApplicationContext applicationContext;
 
     @Override
@@ -60,30 +59,29 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     public CategoryService categoryService(){
         return new CategoryServiceImpl();
     }
+
     //Thymeleaf Configuration
     @Bean
-    public SpringResourceTemplateResolver templateResolver() {
+    public SpringResourceTemplateResolver templateResolver(){
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
         templateResolver.setPrefix("/WEB-INF/views");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode(TemplateMode.HTML);
-        templateResolver.setCharacterEncoding("UTF-8");
         return templateResolver;
     }
 
     @Bean
-    public TemplateEngine templateEngine() {
+    public TemplateEngine templateEngine(){
         TemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
         return templateEngine;
     }
 
     @Bean
-    public ThymeleafViewResolver viewResolver() {
+    public ThymeleafViewResolver viewResolver(){
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
-        viewResolver.setCharacterEncoding("UTF-8");
         return viewResolver;
     }
 
@@ -107,17 +105,17 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     }
 
     @Bean
-    public DataSource dataSource() {
+    public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/blog");
-        dataSource.setUsername("root");
-        dataSource.setPassword("tranducquylhp98");
+        dataSource.setUsername( "root" );
+        dataSource.setPassword( "tranducquylhp98" );
         return dataSource;
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
+    public PlatformTransactionManager transactionManager(EntityManagerFactory emf){
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(emf);
         return transactionManager;
@@ -130,13 +128,10 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
         return properties;
     }
 
-    //Config Converter
-    @Bean
-    public Set<StringToLocalDateConverter> converters() {
-        Set<StringToLocalDateConverter> converters = new HashSet<StringToLocalDateConverter>();
-        converters.add(new StringToLocalDateConverter("MM-dd-yyyy"));
-        return converters;
-
+    //Formatter
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatter(new CategoryFormatter(applicationContext.getBean(CategoryService.class)));
     }
 
 }

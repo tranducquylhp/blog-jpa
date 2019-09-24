@@ -7,6 +7,11 @@
 <body>
 <a href="/create-blog">Create new blog</a>
 <h1>Blogs</h1>
+<form>
+    Search by first name:
+    <input name="s" type="text"/>
+    <input type="submit" value="Search"/>
+</form><br/>
 <th:block th:if="${message}">
     <p th:text="${message}"></p>
 </th:block>

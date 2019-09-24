@@ -1,7 +1,6 @@
 package com.codegym.blog.model;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "Blog")
@@ -14,16 +13,23 @@ public class Blog {
     private String content;
     private String dateCreate;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
     public Blog() {
     }
 
-    public Blog(String title, String description, String content, String dateCreate) {
+    public Blog(String title, String description, String content, String dateCreate, Category category) {
         this.title = title;
         this.description = description;
         this.content = content;
         this.dateCreate = dateCreate;
+        this.category = category;
     }
-
+    @Override
+    public String toString() {
+        return String.format("Blog[id=%d, title='%s', description='%s', content='%s', dateCreate='%s', category='%s']", id, title, description, content, dateCreate, category.getName());
+    }
     public long getId() {
         return id;
     }
@@ -62,5 +68,13 @@ public class Blog {
 
     public void setDateCreate(String dateCreate) {
         this.dateCreate = dateCreate;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

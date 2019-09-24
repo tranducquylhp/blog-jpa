@@ -32,6 +32,17 @@
             <td><input type="text" th:field="*{dateCreate}"/></td>
         </tr>
         <tr>
+            <td>Category:</td>
+            <td>
+                <select name="category">
+                    <option th:each="p : ${categories}"
+                            th:value="${p.id}"
+                            th:text="${p.name}"
+                            th:selected="(${p.id} == *{category.id})"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
             <td></td>
             <td><input type="submit" value="Update blog"></td>
         </tr>

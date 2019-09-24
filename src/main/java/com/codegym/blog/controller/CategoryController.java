@@ -1,16 +1,14 @@
 package com.codegym.blog.controller;
 
+import com.codegym.blog.model.Blog;
 import com.codegym.blog.model.Category;
+import com.codegym.blog.service.BlogService;
 import com.codegym.blog.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Optional;
 
 @Controller
 public class CategoryController {
@@ -18,6 +16,8 @@ public class CategoryController {
     public Environment env;
     @Autowired
     public CategoryService categoryService;
+    @Autowired
+    private BlogService blogService;
 
     @GetMapping("create-category")
     public ModelAndView showCreateForm(){
@@ -27,10 +27,10 @@ public class CategoryController {
     }
 
     @PostMapping("categories")
-    public ModelAndView create(@ModelAttribute("category") Category category, Pageable pageable){
+    public ModelAndView create(@ModelAttribute("category") Category category){
         categoryService.save(category);
 
-        Page<Category> categories = categoryService.findAll(pageable);
+        Iterable<Category> categories = categoryService.findAll();
         ModelAndView modelAndView = new ModelAndView("/category/list");
         modelAndView.addObject("message","Create successfully");
         modelAndView.addObject("categories", categories);
@@ -38,8 +38,8 @@ public class CategoryController {
     }
 
     @GetMapping("/categories")
-    public ModelAndView listCategories(@RequestParam("s") Optional<String> s, Pageable pageable){
-        Page<Category> categories = categoryService.findAll(pageable);
+    public ModelAndView listCategories(){
+        Iterable<Category> categories = categoryService.findAll();
         ModelAndView modelAndView = new ModelAndView("/category/list");
         modelAndView.addObject("categories", categories);
         return modelAndView;
@@ -88,4 +88,18 @@ public class CategoryController {
         return "redirect:categories";
     }
 
+    @GetMapping("/view-category/{id}")
+    public ModelAndView viewCategory(@PathVariable("id") Long id){
+        Category category = categoryService.findById(id);
+        if(category == null){
+            return new ModelAndView("/error.404");
+        }
+
+        Iterable<Blog> blogs = blogService.findAllByCategory(category);
+
+        ModelAndView modelAndView = new ModelAndView("/category/view");
+        modelAndView.addObject("category", category);
+        modelAndView.addObject("blogs", blogs);
+        return modelAndView;
+    }
 }
